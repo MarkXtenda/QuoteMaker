@@ -18,10 +18,17 @@ export default function quotesReducer(state = initialState, action) {
     case "quotes/remove":
       return state.filter((quote)=>quote.id !== action.payload);
     case "quotes/upvote":
-      return state;
+      const findUpQuote = state.find((quote) => quote.id === action.payload);
+      const upVoteQuote = { ...findUpQuote, votes: findUpQuote.votes + 1 };
+      return state.map((quote) =>quote.id === action.payload ? upVoteQuote : quote);
     case "quotes/downvote":
-      return state;
-
+      const findDownQuote = state.find((quote) => quote.id === action.payload);
+      if (findDownQuote.votes > 0) {
+        const downVoteQuote = { ...findDownQuote, votes: findDownQuote.votes - 1 };
+        return state.map((quote) =>quote.id === action.payload ? downVoteQuote : quote);
+      } else {
+        return state;
+      }
     default:
       return state;
   }

@@ -20,7 +20,6 @@ function QuoteForm() {
       ...formData,
       [event.target.name]: event.target.value
     })
-    console.log(formData)
   }
 
   function handleSubmit(event) {
